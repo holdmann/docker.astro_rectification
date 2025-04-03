@@ -64,11 +64,11 @@ class TelegramBotExchangeAction extends Action
     protected function sendResponseToBot(int $chatId, string $text, string $reply_markup = '')
     {
         //$settings = $container->get(SettingsInterface::class);
-        //$token =
-        $bot_token = 1;
+        $token = '7959424182:AAH2t0vjgZRRlPHDkXp-95_j-LkRUzB3zTU';
+
         $ch = curl_init();
         $ch_post = [
-            CURLOPT_URL => 'https://api.telegram.org/bot' . $bot_token . '/sendMessage',
+            CURLOPT_URL => 'https://api.telegram.org/bot' . $token . '/sendMessage',
             CURLOPT_POST => TRUE,
             CURLOPT_RETURNTRANSFER => TRUE,
             CURLOPT_TIMEOUT => 10,
