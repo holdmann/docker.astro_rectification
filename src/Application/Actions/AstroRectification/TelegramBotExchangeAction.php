@@ -14,13 +14,31 @@ class TelegramBotExchangeAction extends Action
      */
     protected function action(): Response
     {
-        $this->logger->info('request data', $this->request->getParsedBody());
+        try 
+        {
+            $data = $this->request->getParsedBody();
 
-        $json = json_encode(['1' => '2'], JSON_PRETTY_PRINT);
-        $this->response->getBody()->write($json);
+            $this->logger->info('request data', $data);
 
-        return $this->response
-                    ->withHeader('Content-Type', 'application/json')
-                    ->withStatus(200);
+            $json = json_encode(['1' => '2'], JSON_PRETTY_PRINT);
+            $this->response->getBody()->write($json);
+
+            return $this->response
+                ->withHeader('Content-Type', 'application/json')
+                ->withStatus(200);
+        }
+        catch (\Throwable $exception)
+        {
+            $this->logger->error($exception->getMessage(), [
+                'trace' => $exception->getTraceAsString()
+            ]);
+
+            $json = json_encode(['error' => $exception->getMessage()], JSON_PRETTY_PRINT);
+            $this->response->getBody()->write($json);
+
+            return $this->response
+                ->withHeader('Content-Type', 'application/json')
+                ->withStatus(500);
+        }
     }
 }
