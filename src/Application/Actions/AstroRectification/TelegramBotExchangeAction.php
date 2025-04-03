@@ -14,7 +14,7 @@ class TelegramBotExchangeAction extends Action
      */
     protected function action(): Response
     {
-        try 
+        try
         {
             $data = $this->request->getParsedBody();
 
