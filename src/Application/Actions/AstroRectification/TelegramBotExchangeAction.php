@@ -21,6 +21,8 @@ class TelegramBotExchangeAction extends Action
 
             $this->logger->info('request data', $data ?? []);
 
+            var_dump($this->container);
+
             if (!isset($data['message']['text'])) {
                 throw new \Exception('Wrong data');
             }

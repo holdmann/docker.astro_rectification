@@ -10,10 +10,13 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Log\LoggerInterface;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpNotFoundException;
+use \Psr\Container\ContainerInterface;
 
 abstract class Action
 {
     protected LoggerInterface $logger;
+
+    protected ContainerInterface $container;
 
     protected Request $request;
 
@@ -21,8 +24,9 @@ abstract class Action
 
     protected array $args;
 
-    public function __construct(LoggerInterface $logger)
+    public function __construct(ContainerInterface $c, LoggerInterface $logger)
     {
+        $this->container = $c;
         $this->logger = $logger;
     }
 
