@@ -20,7 +20,26 @@ class TelegramBotExchangeAction extends Action
 
             $this->logger->info('request data', $data);
 
-            $json = json_encode(['1' => '2'], JSON_PRETTY_PRINT);
+            if (!isset($data['message']['text']))
+            {
+                throw new \Exception('Wrong data');
+            }
+
+            $chatId = (int) $data['message']['from']['id'];
+            $text = trim($data['message']['text']);
+
+            if ($text === '/help')
+            {
+                $firstName = $data['message']['from']['first_name'] ?? 'Странник';
+
+                $text_return = sprintf('Привет, %s, вот команды, что я понимаю: 
+/help - список команд
+/about - о нас
+', $firstName);
+                $this->sendResponseToBot($chatId, $text_return);
+            }
+
+            $json = json_encode(['success' => true], JSON_PRETTY_PRINT);
             $this->response->getBody()->write($json);
 
             return $this->response
@@ -33,12 +52,33 @@ class TelegramBotExchangeAction extends Action
                 'trace' => $exception->getTraceAsString()
             ]);
 
-            $json = json_encode(['error' => $exception->getMessage()], JSON_PRETTY_PRINT);
+            $json = json_encode(['success' => false, 'error' => $exception->getMessage()], JSON_PRETTY_PRINT);
             $this->response->getBody()->write($json);
 
             return $this->response
                 ->withHeader('Content-Type', 'application/json')
                 ->withStatus(500);
         }
+    }
+
+    protected function sendResponseToBot(int $chatId, string $text, string $reply_markup = '')
+    {
+        $token =
+        $ch = curl_init();
+        $ch_post = [
+            CURLOPT_URL => 'https://api.telegram.org/bot' . $bot_token . '/sendMessage',
+            CURLOPT_POST => TRUE,
+            CURLOPT_RETURNTRANSFER => TRUE,
+            CURLOPT_TIMEOUT => 10,
+            CURLOPT_POSTFIELDS => [
+                'chat_id' => $chatId,
+                'parse_mode' => 'HTML',
+                'text' => $text,
+                'reply_markup' => $reply_markup,
+            ]
+        ];
+
+        curl_setopt_array($ch, $ch_post);
+        curl_exec($ch);
     }
 }
