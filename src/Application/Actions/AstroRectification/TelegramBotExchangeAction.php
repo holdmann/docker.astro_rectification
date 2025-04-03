@@ -18,7 +18,7 @@ class TelegramBotExchangeAction extends Action
         {
             $data = $this->request->getParsedBody();
 
-            $this->logger->info('request data', $data);
+            $this->logger->info('request data', $data ?? []);
 
             if (!isset($data['message']['text']))
             {
