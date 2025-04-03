@@ -16,8 +16,7 @@ class TelegramBotExchangeAction extends Action
      */
     protected function action(): Response
     {
-        try
-        {
+        try {
             $data = $this->request->getParsedBody();
 
             $this->logger->info('request data', $data ?? []);
@@ -45,9 +44,7 @@ class TelegramBotExchangeAction extends Action
             return $this->response
                 ->withHeader('Content-Type', 'application/json')
                 ->withStatus(200);
-        }
-        catch (\Throwable $exception)
-        {
+        } catch (\Throwable $exception) {
             $this->logger->error($exception->getMessage(), [
                 'trace' => $exception->getTraceAsString()
             ]);
