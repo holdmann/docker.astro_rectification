@@ -36,7 +36,7 @@ abstract class Action
         $this->response = $response;
         $this->args = $args;
 
-        debug_backtrace(2); die();
+        print_r(debug_backtrace(2)); die();
 
         try {
             return $this->action();
