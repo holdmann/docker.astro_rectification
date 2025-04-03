@@ -7,6 +7,7 @@ namespace App\Application\Actions\AstroRectification;
 use Psr\Http\Message\ResponseInterface as Response;
 use App\Application\Actions\Action;
 use Telegram\Bot\Api;
+use App\Application\Settings\SettingsInterface;
 
 class TelegramBotExchangeAction extends Action
 {
@@ -62,10 +63,19 @@ class TelegramBotExchangeAction extends Action
         }
     }
 
+    /**
+     * @param int $chatId
+     * @param string $text
+     * @param string $reply_markup
+     * @return void
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
+     * @throws \Telegram\Bot\Exceptions\TelegramSDKException
+     */
     protected function sendResponseToBot(int $chatId, string $text, string $reply_markup = '')
     {
-        //$settings = $container->get(SettingsInterface::class);
-        $token = '7959424182:AAH2t0vjgZRRlPHDkXp-95_j-LkRUzB3zTU';
+        $settings = $this->container->get(SettingsInterface::class);
+        $token = $settings->get('telegramBotToken');//'7959424182:AAH2t0vjgZRRlPHDkXp-95_j-LkRUzB3zTU';
 
         $client = new Api($token);
         $response = $client->sendMessage([
@@ -74,23 +84,5 @@ class TelegramBotExchangeAction extends Action
             'text' => $text,
             'reply_markup' => $reply_markup,
         ]);
-/*
-        $ch = curl_init();
-        $ch_post = [
-            CURLOPT_URL => 'https://api.telegram.org/bot' . $token . '/sendMessage',
-            CURLOPT_POST => TRUE,
-            CURLOPT_RETURNTRANSFER => TRUE,
-            CURLOPT_TIMEOUT => 10,
-            CURLOPT_POSTFIELDS => [
-                'chat_id' => $chatId,
-                'parse_mode' => 'HTML',
-                'text' => $text,
-                'reply_markup' => $reply_markup,
-            ]
-        ];
-
-        curl_setopt_array($ch, $ch_post);
-        curl_exec($ch);
-*/
     }
 }
