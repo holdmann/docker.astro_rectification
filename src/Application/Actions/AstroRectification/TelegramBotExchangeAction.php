@@ -33,8 +33,12 @@ class TelegramBotExchangeAction extends Action
 
                 $text_return = sprintf('Привет, %s, вот команды, что я понимаю: 
 /help - список команд
+/start - начать
 /about - о нас
 ', $firstName);
+                $this->sendResponseToBot($chatId, $text_return);
+            } elseif ($text === '/start') {
+                $text_return = sprintf('Введите полное имя');
                 $this->sendResponseToBot($chatId, $text_return);
             }
 
