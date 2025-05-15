@@ -18,7 +18,7 @@ return function (ContainerBuilder $containerBuilder) {
                 'logErrorDetails'     => false,
                 'logger' => [
                     'name' => 'slim-app',
-                    'path' => isset($_ENV['docker']) ? 'php://stdout' : __DIR__ . '/../logs/app.log',
+                    'path' => isset($_ENV['docker']) ? 'php://stdout' : __DIR__ . '/../logs/app.txt',
                     'level' => Logger::DEBUG,
                 ],
                 'telegramBotToken' => '7959424182:AAH2t0vjgZRRlPHDkXp-95_j-LkRUzB3zTU'
