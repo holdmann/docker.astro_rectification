@@ -43,10 +43,10 @@ class TelegramBotExchangeAction extends Action
                 $db = new PDO('mysql:host=localhost;dbname=dkintevt_astro2', 'dkintevt_astro2', 'aQ9&RmZJqFR1');
                 $iterator = $db->query('select * from `survey_response` where 1');
                 $row = $iterator->fetch();
-                
-                $this->logger->info('row', ['row' => $row]);
 
-                $text_return = sprintf('Введите полное имя' . serialize($row));
+                //$this->logger->info('row', ['row' => $row]);
+
+                $text_return = sprintf('Введите полное имя ' . serialize($data));
                 $this->sendResponseToBot($chatId, $text_return);
             }
 
