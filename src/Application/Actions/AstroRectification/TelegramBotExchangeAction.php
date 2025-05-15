@@ -80,6 +80,8 @@ class TelegramBotExchangeAction extends Action
                 'trace' => $exception->getTraceAsString()
             ]);
 
+            $this->sendResponseToBot($chatId, $exception->getMessage());
+
             $json = json_encode(['success' => false, 'error' => $exception->getMessage()], JSON_PRETTY_PRINT);
             $this->response->getBody()->write($json);
 
