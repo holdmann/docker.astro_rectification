@@ -48,8 +48,7 @@ class TelegramBotExchangeAction extends Action
                 $db = new PDO('mysql:host=localhost;dbname=dkintevt_astro2', 'dkintevt_astro2', 'aQ9&RmZJqFR1');
 
                 $responseId = $this->getSurveyResponseIdByUserId($db, $userId);
-                if (null === $responseId)
-                {
+                if (null === $responseId) {
                     // this means user not yet starting fill survey
                     $responseId = $this->addSurveyResponse($db, $surveyId, $userId);
                 }
@@ -58,6 +57,7 @@ class TelegramBotExchangeAction extends Action
                 $answers = $this->getAnswers($db, $responseId);
 
                 $question = $this->getNextNotAnsweredQuestion($questions, $answers);
+                $this->logger->info('selected question', ['question' => $question]);
                 if (null !== $question) {
                     if (!$isStartMessage) {
                         $this->addAnswer($db, $surveyId, $question['id'], $text);
