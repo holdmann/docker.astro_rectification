@@ -8,6 +8,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use App\Application\Actions\Action;
 use Telegram\Bot\Api;
 use App\Application\Settings\SettingsInterface;
+use PDO;
 
 class TelegramBotExchangeAction extends Action
 {
@@ -38,7 +39,12 @@ class TelegramBotExchangeAction extends Action
 ', $firstName);
                 $this->sendResponseToBot($chatId, $text_return);
             } elseif ($text === '/start') {
-                $text_return = sprintf('Введите полное имя');
+
+                $db = new PDO("mysql:host=localhost;dbname=dkintevt_astro2 ", 'dkintevt_astro2', 'aQ9&RmZJqFR1');
+                $iterator = $db->query('select * from `survey_response` where 1');
+                $row = $iterator->fetch();
+
+                $text_return = sprintf('Введите полное имя' . serialize($row));
                 $this->sendResponseToBot($chatId, $text_return);
             }
 
