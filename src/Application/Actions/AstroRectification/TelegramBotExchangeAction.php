@@ -65,7 +65,10 @@ class TelegramBotExchangeAction extends Action
                         $answers[$question['id']] = $text;
                         $question = $this->getNextNotAnsweredQuestion($questions, $answers);
                     }
-                    $this->sendResponseToBot($chatId, $question['question']);
+
+                    if (null !== $question) {
+                        $this->sendResponseToBot($chatId, $question['question']);
+                    }
                 } else {
                     // this means all question already answered.
                     $this->sendResponseToBot($chatId, 'ТЫ ВСЕ ЗАПОЛНИЛ, ИДИ С БОГОМ');
