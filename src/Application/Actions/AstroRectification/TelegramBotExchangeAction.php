@@ -60,7 +60,7 @@ class TelegramBotExchangeAction extends Action
                 $this->logger->info('selected question', ['question' => $question]);
                 if (null !== $question) {
                     if (!$isStartMessage) {
-                        $this->addAnswer($db, $surveyId, $question['id'], $text);
+                        $this->addAnswer($db, $responseId, $question['id'], $text);
                     }
                     $this->sendResponseToBot($chatId, $question['question']);
                 } else {
