@@ -40,7 +40,7 @@ class TelegramBotExchangeAction extends Action
                 $this->sendResponseToBot($chatId, $text_return);
             } elseif ($text === '/start') {
 
-                $db = new PDO("mysql:host=localhost;dbname=dkintevt_astro2 ", 'dkintevt_astro2', 'aQ9&RmZJqFR1');
+                $db = new PDO('mysql:host=localhost;dbname=dkintevt_astro2', 'dkintevt_astro2', 'aQ9&RmZJqFR1');
                 $iterator = $db->query('select * from `survey_response` where 1');
                 $row = $iterator->fetch();
 
