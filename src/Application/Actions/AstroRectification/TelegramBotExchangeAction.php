@@ -197,6 +197,7 @@ class TelegramBotExchangeAction extends Action
             $questionId,
             $answer
         );
+        $this->logger->info($sql);
         $db->exec($sql);
     }
 
