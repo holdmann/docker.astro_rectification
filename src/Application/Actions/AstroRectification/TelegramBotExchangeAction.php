@@ -126,7 +126,7 @@ class TelegramBotExchangeAction extends Action
         $sql = sprintf('select * from `question` where `survey_id` = %d order by `question_order` asc', $surveyId);
         $iterator = $db->query($sql);
         while($row = $iterator->fetch()) {
-            $id = $row['id'];
+            $id = $row['question_id'];
 
             $questions[$id] = [
                 'id' => $id,
